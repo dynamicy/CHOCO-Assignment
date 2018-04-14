@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.chris.chocoassignment.R;
 import com.example.chris.chocoassignment.core.common.model.DramaData;
 
@@ -42,10 +43,15 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
         String name = data.getData()[position].getName();
         String rating = data.getData()[position].getRating().toString();
         Date date = data.getData()[position].getCreated_at();
+        String imgUrl = data.getData()[position].getThumb();
 
         holder.createdAtTextView.setText(date.toString());
         holder.nameTextView.setText(name);
         holder.ratingTextView.setText(rating);
+
+        Glide.with(holder.thumbTmageView.getContext())
+                .load(imgUrl)
+                .into(holder.thumbTmageView);
     }
 
     @Override

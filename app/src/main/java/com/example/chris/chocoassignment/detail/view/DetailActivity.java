@@ -1,5 +1,7 @@
 package com.example.chris.chocoassignment.detail.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -41,6 +43,7 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
 
     private DetailPresenter presenter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +55,23 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
         // Init presenter
         presenter = new DetailPresenter(this);
 
-        // Get bundle
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            Drama data = (Drama) bundle.getSerializable(BUNDLE_KEY);
+        Intent intent = getIntent();
+        String action = intent.getAction();
+
+        if (null != action) {
+            Uri intentData = intent.getData();
+            String id = intentData.getQueryParameter("id");
+            Drama data = presenter.getDramaById(getApplicationContext(), id);
             presenter.setDrama(data);
+        } else {
+            // Get bundle
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null) {
+                Drama data = (Drama) bundle.getSerializable(BUNDLE_KEY);
+                presenter.setDrama(data);
+            }
         }
+
     }
 
     @Override

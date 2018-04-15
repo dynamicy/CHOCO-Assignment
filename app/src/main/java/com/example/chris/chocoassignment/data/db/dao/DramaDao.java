@@ -28,6 +28,15 @@ public interface DramaDao {
     List<DramaEntity> getAll();
 
     /**
+     * Get data by id
+     *
+     * @param id id
+     * @return DramaEntiry
+     */
+    @Query("SELECT * FROM drama WHERE dramaId = :id")
+    DramaEntity getDataById(String id);
+
+    /**
      * Query drama by keyword
      *
      * @param keyWord '%keyword%'

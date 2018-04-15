@@ -1,6 +1,10 @@
 package com.example.chris.chocoassignment.detail.presenter;
 
+import android.content.Context;
+
 import com.example.chris.chocoassignment.core.common.model.Drama;
+import com.example.chris.chocoassignment.data.db.AppDataBase;
+import com.example.chris.chocoassignment.data.db.DramaEntity;
 import com.example.chris.chocoassignment.detail.view.IDetailView;
 
 /**
@@ -45,5 +49,28 @@ public class DetailPresenter {
      */
     public void setDrama(Drama drama) {
         this.drama = drama;
+    }
+
+    /**
+     * Get data by id
+     *
+     * @param context context
+     * @param id      id
+     * @return drama
+     */
+    public Drama getDramaById(Context context, String id) {
+        AppDataBase db = AppDataBase.getInstance(context);
+
+        DramaEntity dramaEntity = db.dramaDao().getDataById(id);
+
+        Drama drama = new Drama();
+        drama.setTotalViews(dramaEntity.getTotalViews());
+        drama.setThumb(dramaEntity.getThumb());
+        drama.setRating(dramaEntity.getRating());
+        drama.setName(dramaEntity.getName());
+        drama.setDramaId(dramaEntity.getDramaId());
+        drama.setCreatedAt(dramaEntity.getCreatedAt());
+
+        return drama;
     }
 }

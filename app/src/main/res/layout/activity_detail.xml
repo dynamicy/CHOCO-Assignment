@@ -6,4 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".detail.view.DetailActivity">
 
+    <!-- 名稱 (name) -->
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="76dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="致我們單純的小美好" />
+
+    <!-- 出版日期 (created_at) -->
+    <TextView
+        android:id="@+id/createdAtTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+        tools:text="2017-11-23T02:04:39.000Z" />
+
+    <!-- 評分 (rating) -->
+    <TextView
+        android:id="@+id/ratingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createdAtTextView"
+        tools:text="4.4526" />
+
+    <!-- 觀看次數(total_views) -->
+    <TextView
+        android:id="@+id/totalViewsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingTextView"
+        tools:text="23562274" />
+
+    <!-- 縮圖(thumb) -->
+    <ImageView
+        android:id="@+id/thumbTmageView"
+        android:layout_width="100dp"
+        android:layout_height="140dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="76dp"
+        android:contentDescription="@string/thumb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
+
 </android.support.constraint.ConstraintLayout>

@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.chris.chocoassignment.R;
+import com.example.chris.chocoassignment.core.common.model.Drama;
 import com.example.chris.chocoassignment.core.common.model.DramaData;
-import com.example.chris.chocoassignment.data.db.AppDataBase;
-import com.example.chris.chocoassignment.data.db.dao.DramaDao;
 
 import java.util.Date;
 
@@ -24,9 +23,9 @@ import java.util.Date;
  */
 public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder> {
 
-    private DramaData data;
-
     private OnItemClickListener onItemClickListener;
+
+    private DramaData data;
 
     public MainListAdapter(DramaData data) {
         this.data = data;
@@ -37,7 +36,16 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
     public MainListItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.list_item, parent, false);
-        return new MainListItemViewHolder(itemView);
+
+        MainListItemViewHolder viewHolder = new MainListItemViewHolder(itemView);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drama drama = data.getData()[viewHolder.getAdapterPosition()];
+                onItemClickListener.onItemClick(drama);
+            }
+        });
+        return viewHolder;
     }
 
     @Override
@@ -60,5 +68,14 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
     public int getItemCount() {
         return data.getData().length;
     }
+
+    public DramaData getData() {
+        return data;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
 }
 

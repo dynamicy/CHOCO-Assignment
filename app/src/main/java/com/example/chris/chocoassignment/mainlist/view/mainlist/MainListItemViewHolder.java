@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  * @author chris
  * @version 1.0
  */
-public class MainListItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class MainListItemViewHolder extends RecyclerView.ViewHolder {
 
     // 名稱 (name)
     @BindView(R.id.nameTextView)
@@ -37,13 +37,8 @@ public class MainListItemViewHolder extends RecyclerView.ViewHolder implements V
 
     MainListItemViewHolder(View itemView) {
         super(itemView);
-
         ButterKnife.bind(this, itemView);
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 }
 

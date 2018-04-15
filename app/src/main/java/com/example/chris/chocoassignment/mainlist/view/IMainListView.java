@@ -1,5 +1,6 @@
 package com.example.chris.chocoassignment.mainlist.view;
 
+import com.example.chris.chocoassignment.core.common.model.Drama;
 import com.example.chris.chocoassignment.core.common.model.DramaData;
 
 /**
@@ -12,7 +13,7 @@ import com.example.chris.chocoassignment.core.common.model.DramaData;
 public interface IMainListView {
 
     // Go to detail activity
-    void gotoDetailActivity();
+    void gotoDetailActivity(Drama data);
 
     // Show list based on data
     void showMainList(DramaData data);

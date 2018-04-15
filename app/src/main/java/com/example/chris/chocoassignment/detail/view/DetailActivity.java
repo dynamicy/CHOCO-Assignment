@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide;
 import com.example.chris.chocoassignment.R;
 import com.example.chris.chocoassignment.core.common.model.Drama;
 import com.example.chris.chocoassignment.detail.presenter.DetailPresenter;
-import com.example.chris.chocoassignment.detail.presenter.IDetailPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +39,7 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
     @BindView(R.id.thumbTmageView)
     ImageView thumbTmageView;
 
-    private IDetailPresenter presenter;
+    private DetailPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

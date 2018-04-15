@@ -16,12 +16,15 @@ import java.util.List;
 
 /**
  * Title: com.example.chris.chocoassignment.mainlist.presenter.MainListPresenter<br>
- * Description: MainListPresenter
+ * Description: MainListPresenter, 需要儲存前次抓取結果，
+ * 讓這個頁面可以在離線狀態進入 App 也能觀看。需有依照部分劇名
+ * 過濾出含有關鍵字的戲劇且 App 在離開後下次開啟依然可顯示在上次
+ * 搜尋後的狀態。請在整個搜尋戲劇流程操作上盡量優化使用體驗。
  *
  * @author chris
  * @version 1.0
  */
-public class MainListPresenter implements IMainListPresenter, ResponseListener<DramaData> {
+public class MainListPresenter implements ResponseListener<DramaData> {
 
     private DramaInforService dramaInforService;
     private IMainListView view;
@@ -32,13 +35,20 @@ public class MainListPresenter implements IMainListPresenter, ResponseListener<D
         this.view = view;
     }
 
-    @Override
+    /**
+     * Fetch drama info list, 列表要有該劇的名稱 (name)、評分 (rating)、出版日期 (created_at)、縮圖(thumb)
+     */
     public void fetchDramaInfoList() {
         // fetch drama info
         dramaInforService.queryDramaInfo(this);
     }
 
-    @Override
+    /**
+     * Save data to db
+     *
+     * @param context context
+     * @param data    DramaData
+     */
     public void saveToRoomDb(Context context, Drama[] data) {
         AppDataBase db = AppDataBase.getInstance(context);
 
@@ -58,13 +68,18 @@ public class MainListPresenter implements IMainListPresenter, ResponseListener<D
         db.dramaDao().insertAll(dramaEntityList);
     }
 
-    @Override
+    /**
+     * Load data from db
+     *
+     * @param context context
+     * @return Drama[]
+     */
     public Drama[] loadDataFromRoomDb(Context context) {
         AppDataBase db = AppDataBase.getInstance(context);
         List<DramaEntity> dramaEntityList = db.dramaDao().getAll();
 
         List<Drama> dramaList = new ArrayList<>();
-        for(DramaEntity dramaEntity : dramaEntityList) {
+        for (DramaEntity dramaEntity : dramaEntityList) {
             Drama drama = new Drama();
             drama.setTotalViews(dramaEntity.getTotalViews());
             drama.setThumb(dramaEntity.getThumb());

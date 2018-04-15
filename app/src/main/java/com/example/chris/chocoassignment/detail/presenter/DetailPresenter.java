@@ -10,7 +10,7 @@ import com.example.chris.chocoassignment.detail.view.IDetailView;
  * @author chris
  * @version 1.0
  */
-public class DetailPresenter implements IDetailPresenter {
+public class DetailPresenter {
 
     private IDetailView view;
 
@@ -20,15 +20,29 @@ public class DetailPresenter implements IDetailPresenter {
         this.view = view;
     }
 
-    @Override
+    /**
+     * Show drama detail
+     *
+     * @param data Drama
+     */
     public void showDetail(Drama data) {
         view.showDetailView(data);
     }
 
+    /**
+     * Get drama data
+     *
+     * @return Drama
+     */
     public Drama getDrama() {
         return drama;
     }
 
+    /**
+     * Set drama data
+     *
+     * @param drama Drama
+     */
     public void setDrama(Drama drama) {
         this.drama = drama;
     }

@@ -43,23 +43,9 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
 
         // Init presenter
         presenter = new MainListPresenter(this);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+        // Fetching data
         presenter.fetchDramaInfoList();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
     @Override

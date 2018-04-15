@@ -11,9 +11,24 @@ import com.example.chris.chocoassignment.core.common.model.Drama;
  */
 public interface IDetailPresenter {
 
+    /**
+     * Show drama detail
+     *
+     * @param data Drama
+     */
     void showDetail(Drama data);
 
+    /**
+     * Get drama data
+     *
+     * @return Drama
+     */
     Drama getDrama();
 
+    /**
+     * Set drama data
+     *
+     * @param drama Drama
+     */
     void setDrama(Drama drama);
 }

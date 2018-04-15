@@ -23,6 +23,8 @@ import butterknife.ButterKnife;
  */
 public class DetailActivity extends AppCompatActivity implements IDetailView {
 
+    private final static String BUNDLE_KEY = "DATA";
+
     @BindView(R.id.nameTextView)
     TextView nameTextView;
 
@@ -51,8 +53,12 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
         // Init presenter
         presenter = new DetailPresenter(this);
 
-        Drama data = (Drama) getIntent().getExtras().getSerializable("DATA");
-        presenter.setDrama(data);
+        // Get bundle
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Drama data = (Drama) bundle.getSerializable(BUNDLE_KEY);
+            presenter.setDrama(data);
+        }
     }
 
     @Override
@@ -70,9 +76,9 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
     @Override
     public void showDetailView(Drama data) {
         nameTextView.setText(data.getName());
-        createdAtTextView.setText(data.getCreated_at().toString());
+        createdAtTextView.setText(data.getCreatedAt().toString());
         ratingTextView.setText(String.valueOf(data.getRating()));
-        totalViewsTextView.setText(String.valueOf(data.getTotal_views()));
+        totalViewsTextView.setText(String.valueOf(data.getTotalViews()));
 
         Glide.with(getBaseContext())
                 .load(data.getThumb())

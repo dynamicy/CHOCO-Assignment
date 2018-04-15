@@ -1,5 +1,6 @@
 package com.example.chris.chocoassignment.service;
 
+import com.example.chris.chocoassignment.core.common.model.DramaData;
 import com.example.chris.chocoassignment.service.common.ResponseListener;
 
 /**
@@ -11,5 +12,5 @@ import com.example.chris.chocoassignment.service.common.ResponseListener;
  */
 public interface IDamaInfoService {
 
-    void queryDramaInfo(ResponseListener listener);
+    void queryDramaInfo(ResponseListener<DramaData> listener);
 }

@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  */
 public class MainListActivity extends AppCompatActivity implements IMainListView, OnItemClickListener {
 
-    private static final String TAG = MainListActivity.class.getSimpleName();
+    private static final String BUNDLE_KEY = "DATA";
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -67,7 +67,7 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
 //        (1) 顯示該劇的縮圖 (thumb)、名稱 (name)、評分 (rating)、出版日期 (created_at)、觀看次數(total_views)
 //        (2) 可讓瀏覽器或其他 App 透過 http://www.example.com/dramas/:id 當 :id 帶入 1 時，開啟資料中 drama_id 為 1 的戲劇。
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra("DATA", data);
+        intent.putExtra(BUNDLE_KEY, data);
         startActivity(intent);
     }
 

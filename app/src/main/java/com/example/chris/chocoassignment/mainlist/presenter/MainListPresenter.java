@@ -21,7 +21,7 @@ import java.util.List;
  * @author chris
  * @version 1.0
  */
-public class MainListPresenter implements IMainListPresenter, ResponseListener {
+public class MainListPresenter implements IMainListPresenter, ResponseListener<DramaData> {
 
     private DramaInforService dramaInforService;
     private IMainListView view;
@@ -46,12 +46,12 @@ public class MainListPresenter implements IMainListPresenter, ResponseListener {
         List<DramaEntity> dramaEntityList = new ArrayList<>();
         for (Drama drama : dramaList) {
             DramaEntity dramaEntity = new DramaEntity();
-            dramaEntity.setCreated_at(drama.getCreated_at());
-            dramaEntity.setDrama_id(drama.getDrama_id());
+            dramaEntity.setCreatedAt(drama.getCreatedAt());
+            dramaEntity.setDramaId(drama.getDramaId());
             dramaEntity.setName(drama.getName());
             dramaEntity.setRating(drama.getRating());
             dramaEntity.setThumb(drama.getThumb());
-            dramaEntity.setTotal_views(drama.getTotal_views());
+            dramaEntity.setTotalViews(drama.getTotalViews());
             dramaEntityList.add(dramaEntity);
         }
 
@@ -66,12 +66,12 @@ public class MainListPresenter implements IMainListPresenter, ResponseListener {
         List<Drama> dramaList = new ArrayList<>();
         for(DramaEntity dramaEntity : dramaEntityList) {
             Drama drama = new Drama();
-            drama.setTotal_views(dramaEntity.getTotal_views());
+            drama.setTotalViews(dramaEntity.getTotalViews());
             drama.setThumb(dramaEntity.getThumb());
-            drama.setTotal_views(dramaEntity.getTotal_views());
             drama.setRating(dramaEntity.getRating());
-            drama.setDrama_id(dramaEntity.getDrama_id());
-            drama.setCreated_at(dramaEntity.getCreated_at());
+            drama.setName(dramaEntity.getName());
+            drama.setDramaId(dramaEntity.getDramaId());
+            drama.setCreatedAt(dramaEntity.getCreatedAt());
             dramaList.add(drama);
         }
 
@@ -81,9 +81,7 @@ public class MainListPresenter implements IMainListPresenter, ResponseListener {
     }
 
     @Override
-    public void onResponse(Object data) {
-        DramaData dramaData = (DramaData) data;
-
+    public void onResponse(DramaData dramaData) {
         // db
         saveToRoomDb((Context) view, dramaData.getData());
         view.showMainList(dramaData.getData());

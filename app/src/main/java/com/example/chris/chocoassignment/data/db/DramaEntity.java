@@ -20,16 +20,16 @@ public class DramaEntity {
 
     // ID
     @PrimaryKey
-    private long drama_id;
+    private long dramaId;
 
     // 名稱 (name)
     private String name;
 
     // 觀看次數(total_views)
-    private BigDecimal total_views;
+    private BigDecimal totalViews;
 
     // 出版日期 (created_at)
-    private Date created_at;
+    private Date createdAt;
 
     // 縮圖(thumb)
     private String thumb;
@@ -40,30 +40,30 @@ public class DramaEntity {
     public DramaEntity() {
     }
 
-    public DramaEntity(long drama_id, String name, BigDecimal total_views, Date created_at, String thumb, Double rating) {
-        this.drama_id = drama_id;
+    public DramaEntity(long dramaId, String name, BigDecimal totalViews, Date createdAt, String thumb, Double rating) {
+        this.dramaId = dramaId;
         this.name = name;
-        this.total_views = total_views;
-        this.created_at = created_at;
+        this.totalViews = totalViews;
+        this.createdAt = createdAt;
         this.thumb = thumb;
         this.rating = rating;
     }
 
     public DramaEntity(Drama drama) {
-        this.drama_id = drama.getDrama_id();
+        this.dramaId = drama.getDramaId();
         this.name = drama.getName();
-        this.total_views = drama.getTotal_views();
-        this.created_at = drama.getCreated_at();
+        this.totalViews = drama.getTotalViews();
+        this.createdAt = drama.getCreatedAt();
         this.thumb = drama.getThumb();
         this.rating = drama.getRating();
     }
 
-    public long getDrama_id() {
-        return drama_id;
+    public long getDramaId() {
+        return dramaId;
     }
 
-    public void setDrama_id(long drama_id) {
-        this.drama_id = drama_id;
+    public void setDramaId(long dramaId) {
+        this.dramaId = dramaId;
     }
 
     public String getName() {
@@ -74,20 +74,20 @@ public class DramaEntity {
         this.name = name;
     }
 
-    public BigDecimal getTotal_views() {
-        return total_views;
+    public BigDecimal getTotalViews() {
+        return totalViews;
     }
 
-    public void setTotal_views(BigDecimal total_views) {
-        this.total_views = total_views;
+    public void setTotalViews(BigDecimal totalViews) {
+        this.totalViews = totalViews;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getThumb() {

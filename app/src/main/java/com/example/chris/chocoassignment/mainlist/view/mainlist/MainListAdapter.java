@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.FutureTarget;
 import com.example.chris.chocoassignment.R;
 import com.example.chris.chocoassignment.core.common.model.Drama;
 
-import java.io.File;
 import java.util.Date;
 
 /**
@@ -43,16 +41,13 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull MainListItemViewHolder holder, int position) {
         String name = data[position].getName();
-        String rating = data[position].getRating().toString();
-        Date date = data[position].getCreated_at();
+        String rating = String.valueOf(data[position].getRating());
+        Date date = data[position].getCreatedAt();
         String imgUrl = data[position].getThumb();
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Drama drama = data[holder.getAdapterPosition()];
-                onItemClickListener.onItemClick(drama);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            Drama drama = data[holder.getAdapterPosition()];
+            onItemClickListener.onItemClick(drama);
         });
 
         holder.createdAtTextView.setText(date.toString());

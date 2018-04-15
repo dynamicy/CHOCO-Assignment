@@ -6,7 +6,6 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-import com.example.chris.chocoassignment.core.common.model.Drama;
 import com.example.chris.chocoassignment.data.db.converter.ConversionFactory;
 import com.example.chris.chocoassignment.data.db.dao.DramaDao;
 

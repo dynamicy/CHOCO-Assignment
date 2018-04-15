@@ -1,7 +1,6 @@
 package com.example.chris.chocoassignment.mainlist.view;
 
 import com.example.chris.chocoassignment.core.common.model.Drama;
-import com.example.chris.chocoassignment.core.common.model.DramaData;
 
 /**
  * Title: com.example.chris.chocoassignment.mainlist.view.IMainListView<br>

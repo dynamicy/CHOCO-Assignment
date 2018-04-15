@@ -68,6 +68,11 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
         return data;
     }
 
+    public void setData(Drama[] data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }

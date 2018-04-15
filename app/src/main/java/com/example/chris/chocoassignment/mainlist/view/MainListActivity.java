@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
 import com.example.chris.chocoassignment.R;
 import com.example.chris.chocoassignment.core.common.model.Drama;
@@ -30,6 +33,9 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.queryEditText)
+    EditText queryEditText;
+
     private MainListPresenter presenter;
     private MainListAdapter mainListAdapter;
 
@@ -46,6 +52,9 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
 
         // Fetching data
         presenter.fetchDramaInfoList();
+
+        // TextWatcher
+        queryEditText.addTextChangedListener(textWatcher);
     }
 
     @Override
@@ -71,5 +80,28 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
     public void onItemClick(Drama drama) {
         gotoDetailActivity(drama);
     }
+
+    TextWatcher textWatcher = new TextWatcher() {
+        String keyword = "";
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            keyword = "%" + s.toString() + "%";
+
+            Drama[] dramas = presenter.searchFromDbByKeyword(getApplicationContext(), keyword);
+
+            mainListAdapter.setData(dramas);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
 }

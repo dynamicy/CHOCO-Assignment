@@ -16,5 +16,4 @@ public interface IMainListView {
 
     // Show list based on data
     void showMainList(Drama[] data);
-
 }

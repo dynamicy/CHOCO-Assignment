@@ -44,6 +44,35 @@ public class MainListPresenter implements ResponseListener<DramaData> {
     }
 
     /**
+     * Search data from db
+     *
+     * @param context context
+     * @param keyWord String
+     * @return Drama[]
+     */
+    public Drama[] searchFromDbByKeyword(Context context, String keyWord) {
+        AppDataBase db = AppDataBase.getInstance(context);
+
+        List<DramaEntity> dramaEntityList = db.dramaDao().searchDramaByKeyWord(keyWord);
+
+        List<Drama> dramaList = new ArrayList<>();
+        for (DramaEntity dramaEntity : dramaEntityList) {
+            Drama drama = new Drama();
+            drama.setTotalViews(dramaEntity.getTotalViews());
+            drama.setThumb(dramaEntity.getThumb());
+            drama.setRating(dramaEntity.getRating());
+            drama.setName(dramaEntity.getName());
+            drama.setDramaId(dramaEntity.getDramaId());
+            drama.setCreatedAt(dramaEntity.getCreatedAt());
+            dramaList.add(drama);
+        }
+
+        Drama[] dramas = new Drama[dramaList.size()];
+
+        return dramaList.toArray(dramas);
+    }
+
+    /**
      * Save data to db
      *
      * @param context context

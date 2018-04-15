@@ -36,16 +36,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
     public MainListItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.list_item, parent, false);
-
-        MainListItemViewHolder viewHolder = new MainListItemViewHolder(itemView);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Drama drama = data.getData()[viewHolder.getAdapterPosition()];
-                onItemClickListener.onItemClick(drama);
-            }
-        });
-        return viewHolder;
+        return new MainListItemViewHolder(itemView);
     }
 
     @Override
@@ -54,6 +45,14 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
         String rating = data.getData()[position].getRating().toString();
         Date date = data.getData()[position].getCreated_at();
         String imgUrl = data.getData()[position].getThumb();
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drama drama = data.getData()[holder.getAdapterPosition()];
+                onItemClickListener.onItemClick(drama);
+            }
+        });
 
         holder.createdAtTextView.setText(date.toString());
         holder.nameTextView.setText(name);

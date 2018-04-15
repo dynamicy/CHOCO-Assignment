@@ -1,6 +1,5 @@
 package com.example.chris.chocoassignment.mainlist.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,16 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import com.example.chris.chocoassignment.R;
 import com.example.chris.chocoassignment.core.common.model.Drama;
 import com.example.chris.chocoassignment.core.common.model.DramaData;
-import com.example.chris.chocoassignment.data.db.AppDataBase;
-import com.example.chris.chocoassignment.data.db.DramaEntity;
 import com.example.chris.chocoassignment.detail.view.DetailActivity;
 import com.example.chris.chocoassignment.mainlist.presenter.MainListPresenter;
 import com.example.chris.chocoassignment.mainlist.view.mainlist.MainListAdapter;
 import com.example.chris.chocoassignment.mainlist.view.mainlist.OnItemClickListener;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,32 +82,7 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // db
-        saveToRoomDb(getApplicationContext(), data);
-    }
-
-    /**
-     * Save data to room db
-     *
-     * @param context appContext
-     * @param data    drama data
-     */
-    private void saveToRoomDb(Context context, DramaData data) {
-        AppDataBase db = AppDataBase.getInstance(context);
-
-        List<Drama> dramaList = Arrays.asList(data.getData());
-        List<DramaEntity> dramaEntityList = new ArrayList<>();
-        for (Drama drama : dramaList) {
-            DramaEntity dramaEntity = new DramaEntity();
-            dramaEntity.setCreated_at(drama.getCreated_at());
-            dramaEntity.setDrama_id(drama.getDrama_id());
-            dramaEntity.setName(drama.getName());
-            dramaEntity.setRating(drama.getRating());
-            dramaEntity.setThumb(drama.getThumb());
-            dramaEntity.setTotal_views(drama.getTotal_views());
-            dramaEntityList.add(dramaEntity);
-        }
-
-        db.dramaDao().insertAll(dramaEntityList);
+        presenter.saveToRoomDb(getApplicationContext(), data);
     }
 
     @Override

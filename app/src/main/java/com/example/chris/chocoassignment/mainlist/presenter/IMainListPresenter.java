@@ -1,5 +1,9 @@
 package com.example.chris.chocoassignment.mainlist.presenter;
 
+import android.content.Context;
+
+import com.example.chris.chocoassignment.core.common.model.DramaData;
+
 /**
  * Title: com.example.chris.chocoassignment.mainlist.presenter.IMainListPresenter<br>
  * Description: IMainListPresenter
@@ -18,4 +22,10 @@ public interface IMainListPresenter {
     //    列表要有該劇的名稱 (name)、評分 (rating)、出版日期 (created_at)、縮圖(thumb)
     void fetchDramaInfoList();
 
+    /**
+     * Save data to db
+     * @param context context
+     * @param data DramaData
+     */
+    void saveToRoomDb(Context context, DramaData data);
 }

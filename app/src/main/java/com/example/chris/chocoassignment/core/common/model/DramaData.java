@@ -11,13 +11,14 @@ import java.io.Serializable;
  */
 public class DramaData implements Serializable {
 
-    private DramaInfo[] data;
+    // 戲劇資訊
+    private Drama[] data;
 
-    public DramaInfo[] getData() {
+    public Drama[] getData() {
         return data;
     }
 
-    public void setData(DramaInfo[] data) {
+    public void setData(Drama[] data) {
         this.data = data;
     }
 }

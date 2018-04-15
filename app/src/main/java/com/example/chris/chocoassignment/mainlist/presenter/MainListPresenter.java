@@ -25,7 +25,7 @@ public class MainListPresenter implements IMainListPresenter, ResponseListener {
 
     @Override
     public void checkDramaDetail() {
-
+        // Go to detail activity
     }
 
     @Override

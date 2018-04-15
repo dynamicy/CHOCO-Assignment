@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.example.chris.chocoassignment.R;
 import com.example.chris.chocoassignment.core.common.model.DramaData;
+import com.example.chris.chocoassignment.data.db.AppDataBase;
+import com.example.chris.chocoassignment.data.db.dao.DramaDao;
 
 import java.util.Date;
 

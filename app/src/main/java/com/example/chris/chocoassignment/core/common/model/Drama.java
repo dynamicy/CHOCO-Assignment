@@ -5,24 +5,30 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * Title: com.example.chris.chocoassignment.core.http.common.DramaInfo<br>
- * Description: DramaInfo
+ * Title: com.example.chris.chocoassignment.core.http.common.Drama<br>
+ * Description: Drama
  *
  * @author chris
  * @version 1.0
  */
-public class DramaInfo implements Serializable {
+public class Drama implements Serializable {
 
+    // ID
     private long drama_id;
 
+    // 名稱 (name)
     private String name;
 
+    // 觀看次數(total_views)
     private BigDecimal total_views;
 
+    // 出版日期 (created_at)
     private Date created_at;
 
+    // 縮圖(thumb)
     private String thumb;
 
+    // 評分 (rating)
     private Double rating;
 
     public long getDrama_id() {

@@ -16,6 +16,6 @@ public interface IMainListView {
     void gotoDetailActivity(Drama data);
 
     // Show list based on data
-    void showMainList(DramaData data);
+    void showMainList(Drama[] data);
 
 }

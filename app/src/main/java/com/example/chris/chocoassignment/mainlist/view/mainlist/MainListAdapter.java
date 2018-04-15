@@ -8,10 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.FutureTarget;
 import com.example.chris.chocoassignment.R;
 import com.example.chris.chocoassignment.core.common.model.Drama;
-import com.example.chris.chocoassignment.core.common.model.DramaData;
 
+import java.io.File;
 import java.util.Date;
 
 /**
@@ -25,9 +26,9 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
 
     private OnItemClickListener onItemClickListener;
 
-    private DramaData data;
+    private Drama[] data;
 
-    public MainListAdapter(DramaData data) {
+    public MainListAdapter(Drama[] data) {
         this.data = data;
     }
 
@@ -41,15 +42,15 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MainListItemViewHolder holder, int position) {
-        String name = data.getData()[position].getName();
-        String rating = data.getData()[position].getRating().toString();
-        Date date = data.getData()[position].getCreated_at();
-        String imgUrl = data.getData()[position].getThumb();
+        String name = data[position].getName();
+        String rating = data[position].getRating().toString();
+        Date date = data[position].getCreated_at();
+        String imgUrl = data[position].getThumb();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Drama drama = data.getData()[holder.getAdapterPosition()];
+                Drama drama = data[holder.getAdapterPosition()];
                 onItemClickListener.onItemClick(drama);
             }
         });
@@ -65,10 +66,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
 
     @Override
     public int getItemCount() {
-        return data.getData().length;
+        return data.length;
     }
 
-    public DramaData getData() {
+    public Drama[] getData() {
         return data;
     }
 

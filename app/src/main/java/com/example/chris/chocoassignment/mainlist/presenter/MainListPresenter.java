@@ -33,21 +33,16 @@ public class MainListPresenter implements IMainListPresenter, ResponseListener {
     }
 
     @Override
-    public void checkDramaDetail() {
-        // Go to detail activity
-    }
-
-    @Override
     public void fetchDramaInfoList() {
         // fetch drama info
         dramaInforService.queryDramaInfo(this);
     }
 
     @Override
-    public void saveToRoomDb(Context context, DramaData data) {
+    public void saveToRoomDb(Context context, Drama[] data) {
         AppDataBase db = AppDataBase.getInstance(context);
 
-        List<Drama> dramaList = Arrays.asList(data.getData());
+        List<Drama> dramaList = Arrays.asList(data);
         List<DramaEntity> dramaEntityList = new ArrayList<>();
         for (Drama drama : dramaList) {
             DramaEntity dramaEntity = new DramaEntity();
@@ -64,13 +59,40 @@ public class MainListPresenter implements IMainListPresenter, ResponseListener {
     }
 
     @Override
+    public Drama[] loadDataFromRoomDb(Context context) {
+        AppDataBase db = AppDataBase.getInstance(context);
+        List<DramaEntity> dramaEntityList = db.dramaDao().getAll();
+
+        List<Drama> dramaList = new ArrayList<>();
+        for(DramaEntity dramaEntity : dramaEntityList) {
+            Drama drama = new Drama();
+            drama.setTotal_views(dramaEntity.getTotal_views());
+            drama.setThumb(dramaEntity.getThumb());
+            drama.setTotal_views(dramaEntity.getTotal_views());
+            drama.setRating(dramaEntity.getRating());
+            drama.setDrama_id(dramaEntity.getDrama_id());
+            drama.setCreated_at(dramaEntity.getCreated_at());
+            dramaList.add(drama);
+        }
+
+        Drama[] dramas = new Drama[dramaList.size()];
+
+        return dramaList.toArray(dramas);
+    }
+
+    @Override
     public void onResponse(Object data) {
-        view.showMainList((DramaData) data);
+        DramaData dramaData = (DramaData) data;
+
+        // db
+        saveToRoomDb((Context) view, dramaData.getData());
+        view.showMainList(dramaData.getData());
     }
 
     @Override
     public void onError(Throwable t) {
-
+        Drama[] dramas = loadDataFromRoomDb((Context) view);
+        view.showMainList(dramas);
     }
 }
 

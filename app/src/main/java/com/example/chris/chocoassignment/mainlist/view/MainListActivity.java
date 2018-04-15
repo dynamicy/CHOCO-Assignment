@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.chris.chocoassignment.R;
 import com.example.chris.chocoassignment.core.common.model.Drama;
-import com.example.chris.chocoassignment.core.common.model.DramaData;
 import com.example.chris.chocoassignment.detail.view.DetailActivity;
 import com.example.chris.chocoassignment.mainlist.presenter.MainListPresenter;
 import com.example.chris.chocoassignment.mainlist.view.mainlist.MainListAdapter;
@@ -73,16 +72,13 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
     }
 
     @Override
-    public void showMainList(DramaData data) {
+    public void showMainList(Drama[] data) {
         // Recyclierview
         mainListAdapter = new MainListAdapter(data);
         mainListAdapter.setOnItemClickListener(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mainListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // db
-        presenter.saveToRoomDb(getApplicationContext(), data);
     }
 
     @Override

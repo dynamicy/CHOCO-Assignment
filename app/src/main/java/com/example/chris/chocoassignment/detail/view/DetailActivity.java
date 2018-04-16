@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +41,9 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
     @BindView(R.id.thumbTmageView)
     ImageView thumbTmageView;
 
+    @BindView(R.id.noDataHintTextView)
+    TextView noDataHintTextView;
+
     private DetailPresenter presenter;
 
     @Override
@@ -59,15 +63,38 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
 
         if (null != action) {
             Uri intentData = intent.getData();
-            String id = intentData.getQueryParameter("id");
-            Drama data = presenter.getDramaById(getApplicationContext(), id);
-            presenter.setDrama(data);
+            if (intentData == null) {
+                noDataHintTextView.setVisibility(View.VISIBLE);
+                nameTextView.setVisibility(View.INVISIBLE);
+                createdAtTextView.setVisibility(View.INVISIBLE);
+                ratingTextView.setVisibility(View.INVISIBLE);
+                totalViewsTextView.setVisibility(View.INVISIBLE);
+                thumbTmageView.setVisibility(View.INVISIBLE);
+            } else {
+                String id = intentData.getQueryParameter("id");
+                Drama data = presenter.getDramaById(getApplicationContext(), id);
+                presenter.setDrama(data);
+
+                noDataHintTextView.setVisibility(View.INVISIBLE);
+                nameTextView.setVisibility(View.VISIBLE);
+                createdAtTextView.setVisibility(View.VISIBLE);
+                ratingTextView.setVisibility(View.VISIBLE);
+                totalViewsTextView.setVisibility(View.VISIBLE);
+                thumbTmageView.setVisibility(View.VISIBLE);
+            }
         } else {
             // Get bundle
             Bundle bundle = getIntent().getExtras();
             if (bundle != null) {
                 Drama data = (Drama) bundle.getSerializable(BundleKey.DRAMA_BUNDLE);
                 presenter.setDrama(data);
+
+                noDataHintTextView.setVisibility(View.INVISIBLE);
+                nameTextView.setVisibility(View.VISIBLE);
+                createdAtTextView.setVisibility(View.VISIBLE);
+                ratingTextView.setVisibility(View.VISIBLE);
+                totalViewsTextView.setVisibility(View.VISIBLE);
+                thumbTmageView.setVisibility(View.VISIBLE);
             }
         }
 

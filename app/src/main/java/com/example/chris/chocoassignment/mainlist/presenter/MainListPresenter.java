@@ -111,11 +111,15 @@ public class MainListPresenter implements ResponseListener<DramaData> {
 
         // db
         saveToRoomDb((Context) view, dramaList);
+
+        view.showMainList();
     }
 
     @Override
     public void onError(Throwable t) {
         Log.e(TAG, "[onError] ", t);
+
+        view.showMainList();
     }
 
     /**

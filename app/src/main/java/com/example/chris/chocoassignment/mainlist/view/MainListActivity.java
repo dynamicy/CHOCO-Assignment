@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.chris.chocoassignment.R;
 import com.example.chris.chocoassignment.core.common.constant.BundleKey;
@@ -40,6 +42,9 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
     @BindView(R.id.queryEditText)
     EditText queryEditText;
 
+    @BindView(R.id.noDataHintTextView)
+    TextView noDataHintTextView;
+
     private MainListPresenter presenter;
     private MainListAdapter mainListAdapter;
 
@@ -68,12 +73,6 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
             String keyword = savedInstanceState.getString(BundleKey.KEYWORD_BUNDLE);
 
             queryEditText.setText(keyword);
-
-            List<Drama> dramas = presenter.searchFromDbByKeyword(getApplicationContext(), keyword);
-
-            showMainList(dramas);
-        } else {
-            showMainList(presenter.loadDataFromRoomDb(getApplicationContext()));
         }
     }
 
@@ -97,8 +96,21 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
     }
 
     @Override
-    public void showMainList(List<Drama> data) {
-        mainListAdapter.setData(data);
+    public void showMainList() {
+
+        String keyword = "%" + getTextFromQueryEditText() + "%";
+
+        List<Drama> dramas = presenter.searchFromDbByKeyword(getApplicationContext(), keyword);
+
+        mainListAdapter.setData(dramas);
+
+        if (dramas == null || dramas.size() == 0) {
+            noDataHintTextView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+        } else {
+            noDataHintTextView.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -127,6 +139,14 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
                 List<Drama> dramas = presenter.searchFromDbByKeyword(getApplicationContext(), keyword);
 
                 mainListAdapter.setData(dramas);
+
+                if (dramas == null || dramas.size() == 0) {
+                    noDataHintTextView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.INVISIBLE);
+                } else {
+                    noDataHintTextView.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             }
         }
 

@@ -2,8 +2,6 @@ package com.example.chris.chocoassignment.mainlist.view;
 
 import com.example.chris.chocoassignment.core.common.model.Drama;
 
-import java.util.List;
-
 /**
  * Title: com.example.chris.chocoassignment.mainlist.view.IMainListView<br>
  * Description: IMainListView
@@ -22,10 +20,8 @@ public interface IMainListView {
 
     /**
      * Show list based on data
-     *
-     * @param data List<Drama>
      */
-    void showMainList(List<Drama> data);
+    void showMainList();
 
     /**
      * @return String

@@ -15,6 +15,21 @@
         android:inputType="textPersonName"
         tools:text="Name" />
 
+    <TextView
+        android:id="@+id/noDataHintTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/no_data"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:textSize="36sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/queryEditText" />
+
     <!-- Main List -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

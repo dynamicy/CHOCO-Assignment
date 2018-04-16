@@ -63,14 +63,17 @@ public class DetailPresenter {
 
         DramaEntity dramaEntity = db.dramaDao().getDataById(id);
 
-        Drama drama = new Drama();
-        drama.setTotalViews(dramaEntity.getTotalViews());
-        drama.setThumb(dramaEntity.getThumb());
-        drama.setRating(dramaEntity.getRating());
-        drama.setName(dramaEntity.getName());
-        drama.setDramaId(dramaEntity.getDramaId());
-        drama.setCreatedAt(dramaEntity.getCreatedAt());
-
-        return drama;
+        if (dramaEntity != null) {
+            Drama drama = new Drama();
+            drama.setTotalViews(dramaEntity.getTotalViews());
+            drama.setThumb(dramaEntity.getThumb());
+            drama.setRating(dramaEntity.getRating());
+            drama.setName(dramaEntity.getName());
+            drama.setDramaId(dramaEntity.getDramaId());
+            drama.setCreatedAt(dramaEntity.getCreatedAt());
+            return drama;
+        } else {
+            return null;
+        }
     }
 }

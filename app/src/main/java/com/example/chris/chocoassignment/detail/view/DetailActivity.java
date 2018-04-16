@@ -64,23 +64,18 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
         if (null != action) {
             Uri intentData = intent.getData();
             if (intentData == null) {
-                noDataHintTextView.setVisibility(View.VISIBLE);
-                nameTextView.setVisibility(View.INVISIBLE);
-                createdAtTextView.setVisibility(View.INVISIBLE);
-                ratingTextView.setVisibility(View.INVISIBLE);
-                totalViewsTextView.setVisibility(View.INVISIBLE);
-                thumbTmageView.setVisibility(View.INVISIBLE);
+                noDataDisplay();
             } else {
                 String id = intentData.getQueryParameter("id");
                 Drama data = presenter.getDramaById(getApplicationContext(), id);
-                presenter.setDrama(data);
-
-                noDataHintTextView.setVisibility(View.INVISIBLE);
-                nameTextView.setVisibility(View.VISIBLE);
-                createdAtTextView.setVisibility(View.VISIBLE);
-                ratingTextView.setVisibility(View.VISIBLE);
-                totalViewsTextView.setVisibility(View.VISIBLE);
-                thumbTmageView.setVisibility(View.VISIBLE);
+                if (data == null) {
+                    // Wrong id number
+                    noDataDisplay();
+                } else {
+                    presenter.setDrama(data);
+                    withDataDisplay();
+                    presenter.showDetail(presenter.getDrama());
+                }
             }
         } else {
             // Get bundle
@@ -88,23 +83,11 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
             if (bundle != null) {
                 Drama data = (Drama) bundle.getSerializable(BundleKey.DRAMA_BUNDLE);
                 presenter.setDrama(data);
-
-                noDataHintTextView.setVisibility(View.INVISIBLE);
-                nameTextView.setVisibility(View.VISIBLE);
-                createdAtTextView.setVisibility(View.VISIBLE);
-                ratingTextView.setVisibility(View.VISIBLE);
-                totalViewsTextView.setVisibility(View.VISIBLE);
-                thumbTmageView.setVisibility(View.VISIBLE);
+                withDataDisplay();
+                presenter.showDetail(presenter.getDrama());
             }
         }
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        presenter.showDetail(presenter.getDrama());
     }
 
     @Override
@@ -121,5 +104,25 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
         Glide.with(getBaseContext())
                 .load(data.getThumb())
                 .into(thumbTmageView);
+    }
+
+    @Override
+    public void noDataDisplay() {
+        noDataHintTextView.setVisibility(View.VISIBLE);
+        nameTextView.setVisibility(View.INVISIBLE);
+        createdAtTextView.setVisibility(View.INVISIBLE);
+        ratingTextView.setVisibility(View.INVISIBLE);
+        totalViewsTextView.setVisibility(View.INVISIBLE);
+        thumbTmageView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void withDataDisplay() {
+        noDataHintTextView.setVisibility(View.INVISIBLE);
+        nameTextView.setVisibility(View.VISIBLE);
+        createdAtTextView.setVisibility(View.VISIBLE);
+        ratingTextView.setVisibility(View.VISIBLE);
+        totalViewsTextView.setVisibility(View.VISIBLE);
+        thumbTmageView.setVisibility(View.VISIBLE);
     }
 }

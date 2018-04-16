@@ -17,4 +17,14 @@ public interface IDetailView {
      * @param data Drama
      */
     void showDetailView(Drama data);
+
+    /**
+     * No data display
+     */
+    void noDataDisplay();
+
+    /**
+     * With data display
+     */
+    void withDataDisplay();
 }

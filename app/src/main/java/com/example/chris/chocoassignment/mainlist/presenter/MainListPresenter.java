@@ -1,6 +1,7 @@
 package com.example.chris.chocoassignment.mainlist.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.chris.chocoassignment.core.common.model.Drama;
 import com.example.chris.chocoassignment.core.common.model.DramaData;
@@ -26,6 +27,8 @@ import java.util.List;
  */
 public class MainListPresenter implements ResponseListener<DramaData> {
 
+    private static final String TAG = MainListPresenter.class.getSimpleName();
+
     private DramaInforService dramaInforService;
     private IMainListView view;
 
@@ -50,47 +53,32 @@ public class MainListPresenter implements ResponseListener<DramaData> {
      * @param keyWord String
      * @return Drama[]
      */
-    public Drama[] searchFromDbByKeyword(Context context, String keyWord) {
+    public List<Drama> searchFromDbByKeyword(Context context, String keyWord) {
         AppDataBase db = AppDataBase.getInstance(context);
 
         List<DramaEntity> dramaEntityList = db.dramaDao().searchDramaByKeyWord(keyWord);
 
         List<Drama> dramaList = new ArrayList<>();
         for (DramaEntity dramaEntity : dramaEntityList) {
-            Drama drama = new Drama();
-            drama.setTotalViews(dramaEntity.getTotalViews());
-            drama.setThumb(dramaEntity.getThumb());
-            drama.setRating(dramaEntity.getRating());
-            drama.setName(dramaEntity.getName());
-            drama.setDramaId(dramaEntity.getDramaId());
-            drama.setCreatedAt(dramaEntity.getCreatedAt());
+            Drama drama = entityToModel(dramaEntity);
             dramaList.add(drama);
         }
 
-        Drama[] dramas = new Drama[dramaList.size()];
-
-        return dramaList.toArray(dramas);
+        return dramaList;
     }
 
     /**
      * Save data to db
      *
-     * @param context context
-     * @param data    DramaData
+     * @param context   context
+     * @param dramaList List<Drama>
      */
-    public void saveToRoomDb(Context context, Drama[] data) {
+    public void saveToRoomDb(Context context, List<Drama> dramaList) {
         AppDataBase db = AppDataBase.getInstance(context);
 
-        List<Drama> dramaList = Arrays.asList(data);
         List<DramaEntity> dramaEntityList = new ArrayList<>();
         for (Drama drama : dramaList) {
-            DramaEntity dramaEntity = new DramaEntity();
-            dramaEntity.setCreatedAt(drama.getCreatedAt());
-            dramaEntity.setDramaId(drama.getDramaId());
-            dramaEntity.setName(drama.getName());
-            dramaEntity.setRating(drama.getRating());
-            dramaEntity.setThumb(drama.getThumb());
-            dramaEntity.setTotalViews(drama.getTotalViews());
+            DramaEntity dramaEntity = modelToEntity(drama);
             dramaEntityList.add(dramaEntity);
         }
 
@@ -101,40 +89,67 @@ public class MainListPresenter implements ResponseListener<DramaData> {
      * Load data from db
      *
      * @param context context
-     * @return Drama[]
+     * @return List<Drama>
      */
-    public Drama[] loadDataFromRoomDb(Context context) {
+    public List<Drama> loadDataFromRoomDb(Context context) {
         AppDataBase db = AppDataBase.getInstance(context);
         List<DramaEntity> dramaEntityList = db.dramaDao().getAll();
 
         List<Drama> dramaList = new ArrayList<>();
         for (DramaEntity dramaEntity : dramaEntityList) {
-            Drama drama = new Drama();
-            drama.setTotalViews(dramaEntity.getTotalViews());
-            drama.setThumb(dramaEntity.getThumb());
-            drama.setRating(dramaEntity.getRating());
-            drama.setName(dramaEntity.getName());
-            drama.setDramaId(dramaEntity.getDramaId());
-            drama.setCreatedAt(dramaEntity.getCreatedAt());
+            Drama drama = entityToModel(dramaEntity);
             dramaList.add(drama);
         }
 
-        Drama[] dramas = new Drama[dramaList.size()];
-
-        return dramaList.toArray(dramas);
+        return dramaList;
     }
 
     @Override
     public void onResponse(DramaData dramaData) {
+
+        List<Drama> dramaList = Arrays.asList(dramaData.getData());
+
         // db
-        saveToRoomDb((Context) view, dramaData.getData());
-        view.showMainList(dramaData.getData());
+        saveToRoomDb((Context) view, dramaList);
     }
 
     @Override
     public void onError(Throwable t) {
-        Drama[] dramas = loadDataFromRoomDb((Context) view);
-        view.showMainList(dramas);
+        Log.e(TAG, "[onError] ", t);
+    }
+
+    /**
+     * DramaEntity -> Drama
+     *
+     * @param dramaEntity DramaEntity
+     * @return Drama
+     */
+    private Drama entityToModel(DramaEntity dramaEntity) {
+        Drama drama = new Drama();
+        drama.setTotalViews(dramaEntity.getTotalViews());
+        drama.setThumb(dramaEntity.getThumb());
+        drama.setRating(dramaEntity.getRating());
+        drama.setName(dramaEntity.getName());
+        drama.setDramaId(dramaEntity.getDramaId());
+        drama.setCreatedAt(dramaEntity.getCreatedAt());
+        return drama;
+    }
+
+    /**
+     * Drama -> DramaEntity
+     *
+     * @param drama Drama
+     * @return DramaEntity
+     */
+    private DramaEntity modelToEntity(Drama drama) {
+        DramaEntity dramaEntity = new DramaEntity();
+        dramaEntity.setCreatedAt(drama.getCreatedAt());
+        dramaEntity.setDramaId(drama.getDramaId());
+        dramaEntity.setName(drama.getName());
+        dramaEntity.setRating(drama.getRating());
+        dramaEntity.setThumb(drama.getThumb());
+        dramaEntity.setTotalViews(drama.getTotalViews());
+        return dramaEntity;
     }
 }
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.chris.chocoassignment.R;
+import com.example.chris.chocoassignment.core.common.constant.BundleKey;
 import com.example.chris.chocoassignment.core.common.model.Drama;
 import com.example.chris.chocoassignment.detail.presenter.DetailPresenter;
 
@@ -23,8 +24,6 @@ import butterknife.ButterKnife;
  * @version 1.0
  */
 public class DetailActivity extends AppCompatActivity implements IDetailView {
-
-    private final static String BUNDLE_KEY = "DATA";
 
     @BindView(R.id.nameTextView)
     TextView nameTextView;
@@ -43,7 +42,6 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
 
     private DetailPresenter presenter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +53,7 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
         // Init presenter
         presenter = new DetailPresenter(this);
 
+        // Deep Links
         Intent intent = getIntent();
         String action = intent.getAction();
 
@@ -67,7 +66,7 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
             // Get bundle
             Bundle bundle = getIntent().getExtras();
             if (bundle != null) {
-                Drama data = (Drama) bundle.getSerializable(BUNDLE_KEY);
+                Drama data = (Drama) bundle.getSerializable(BundleKey.DRAMA_BUNDLE);
                 presenter.setDrama(data);
             }
         }
@@ -79,11 +78,6 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
         super.onResume();
 
         presenter.showDetail(presenter.getDrama());
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
     @Override

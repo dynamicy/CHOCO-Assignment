@@ -12,5 +12,10 @@ import com.example.chris.chocoassignment.service.common.ResponseListener;
  */
 public interface IDamaInfoService {
 
+    /**
+     * Query drama info
+     *
+     * @param listener ResponseListener
+     */
     void queryDramaInfo(ResponseListener<DramaData> listener);
 }

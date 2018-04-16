@@ -1,10 +1,10 @@
-package com.example.chris.chocoassignment.data;
+package com.example.chris.chocoassignment.data.remote;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Title: com.example.chris.chocoassignment.data.DramaResourceProvider<br>
+ * Title: com.example.chris.chocoassignment.data.remote.DramaResourceProvider<br>
  * Description: DramaResourceProvider
  *
  * @author chris
@@ -12,9 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class DramaResourceProvider {
 
-    private static final String BASE_URL = "http://www.mocky.io/v2/";
-
-    private DramaResourceProvider() {}
+    private DramaResourceProvider() {
+    }
 
     private static class LazyHolder {
         private static final DramaResourceProvider INSTANCE = new DramaResourceProvider();
@@ -26,7 +25,10 @@ public class DramaResourceProvider {
 
     public IDramaInfoResource getDramaResourceProvider() {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DramaResourceContract.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         return retrofit.create(IDramaInfoResource.class);
     }

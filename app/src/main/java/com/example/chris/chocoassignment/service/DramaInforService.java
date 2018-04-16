@@ -3,7 +3,7 @@ package com.example.chris.chocoassignment.service;
 import android.support.annotation.NonNull;
 
 import com.example.chris.chocoassignment.core.common.model.DramaData;
-import com.example.chris.chocoassignment.data.DramaResourceProvider;
+import com.example.chris.chocoassignment.data.remote.DramaResourceProvider;
 import com.example.chris.chocoassignment.service.common.ResponseListener;
 
 import retrofit2.Call;
@@ -21,7 +21,10 @@ public class DramaInforService implements IDamaInfoService {
 
     @Override
     public void queryDramaInfo(final ResponseListener<DramaData> listener) {
-        Call<DramaData> call = DramaResourceProvider.getInstance().getDramaResourceProvider().getDramaInfoList("5a97c59c30000047005c1ed2");
+        Call<DramaData> call = DramaResourceProvider
+                .getInstance()
+                .getDramaResourceProvider()
+                .getDramaInfoList("5a97c59c30000047005c1ed2");
 
         call.enqueue(new Callback<DramaData>() {
             @Override

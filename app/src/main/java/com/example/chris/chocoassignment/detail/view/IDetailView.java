@@ -11,5 +11,10 @@ import com.example.chris.chocoassignment.core.common.model.Drama;
  */
 public interface IDetailView {
 
+    /**
+     * Show detail view
+     *
+     * @param data Drama
+     */
     void showDetailView(Drama data);
 }

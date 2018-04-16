@@ -15,7 +15,7 @@ import java.util.Date;
  * @author chris
  * @version 1.0
  */
-@Entity(tableName = "drama")
+@Entity(tableName = DatabaseContract.TABLE_NAME)
 public class DramaEntity {
 
     // ID

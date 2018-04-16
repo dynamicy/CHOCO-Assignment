@@ -7,14 +7,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.example.chris.chocoassignment.R;
+import com.example.chris.chocoassignment.core.common.constant.BundleKey;
 import com.example.chris.chocoassignment.core.common.model.Drama;
 import com.example.chris.chocoassignment.detail.view.DetailActivity;
 import com.example.chris.chocoassignment.mainlist.presenter.MainListPresenter;
 import com.example.chris.chocoassignment.mainlist.view.mainlist.MainListAdapter;
 import com.example.chris.chocoassignment.mainlist.view.mainlist.OnItemClickListener;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +32,7 @@ import butterknife.ButterKnife;
  */
 public class MainListActivity extends AppCompatActivity implements IMainListView, OnItemClickListener {
 
-    private static final String BUNDLE_KEY = "DATA";
+    private static final String TAG = MainListActivity.class.getSimpleName();
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -55,6 +59,32 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
 
         // TextWatcher
         queryEditText.addTextChangedListener(textWatcher);
+
+        initRecyclerView();
+
+        if (savedInstanceState != null) {
+            Log.i(TAG, "Restore savedInstanceState");
+
+            String keyword = savedInstanceState.getString(BundleKey.KEYWORD_BUNDLE);
+
+            queryEditText.setText(keyword);
+
+            List<Drama> dramas = presenter.searchFromDbByKeyword(getApplicationContext(), keyword);
+
+            showMainList(dramas);
+        } else {
+            showMainList(presenter.loadDataFromRoomDb(getApplicationContext()));
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        Log.i(TAG, "onSaveInstanceState");
+
+        super.onSaveInstanceState(outState);
+
+        outState.putString(BundleKey.KEYWORD_BUNDLE, getTextFromQueryEditText());
     }
 
     @Override
@@ -62,18 +92,18 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
 //        (1) 顯示該劇的縮圖 (thumb)、名稱 (name)、評分 (rating)、出版日期 (created_at)、觀看次數(total_views)
 //        (2) 可讓瀏覽器或其他 App 透過 http://www.example.com/dramas/:id 當 :id 帶入 1 時，開啟資料中 drama_id 為 1 的戲劇。
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(BUNDLE_KEY, data);
+        intent.putExtra(BundleKey.DRAMA_BUNDLE, data);
         startActivity(intent);
     }
 
     @Override
-    public void showMainList(Drama[] data) {
-        // Recyclierview
-        mainListAdapter = new MainListAdapter(data);
-        mainListAdapter.setOnItemClickListener(this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(mainListAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    public void showMainList(List<Drama> data) {
+        mainListAdapter.setData(data);
+    }
+
+    @Override
+    public String getTextFromQueryEditText() {
+        return queryEditText.getText() == null ? "" : queryEditText.getText().toString();
     }
 
     @Override
@@ -91,11 +121,13 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            keyword = "%" + s.toString() + "%";
+            if (null != s) {
+                keyword = "%" + s.toString() + "%";
 
-            Drama[] dramas = presenter.searchFromDbByKeyword(getApplicationContext(), keyword);
+                List<Drama> dramas = presenter.searchFromDbByKeyword(getApplicationContext(), keyword);
 
-            mainListAdapter.setData(dramas);
+                mainListAdapter.setData(dramas);
+            }
         }
 
         @Override
@@ -103,5 +135,16 @@ public class MainListActivity extends AppCompatActivity implements IMainListView
 
         }
     };
+
+    /**
+     * Init RecyclerView
+     */
+    private void initRecyclerView() {
+        mainListAdapter = new MainListAdapter();
+        mainListAdapter.setOnItemClickListener(this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mainListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 
 }

@@ -9,8 +9,6 @@ import android.content.Context;
 import com.example.chris.chocoassignment.data.db.converter.ConversionFactory;
 import com.example.chris.chocoassignment.data.db.dao.DramaDao;
 
-import java.util.List;
-
 /**
  * Title: com.example.chris.chocoassignment.data.db.AppDataBase<br>
  * Description: AppDataBase
@@ -18,12 +16,9 @@ import java.util.List;
  * @author chris
  * @version 1.0
  */
-@Database(entities = {DramaEntity.class}, version = 1, exportSchema = true)
+@Database(entities = {DramaEntity.class}, version = 1, exportSchema = false)
 @TypeConverters(ConversionFactory.class)
 public abstract class AppDataBase extends RoomDatabase {
-
-    // DB name
-    private static final String DATABASE_NAME = "drama.db";
 
     public abstract DramaDao dramaDao();
 
@@ -44,18 +39,7 @@ public abstract class AppDataBase extends RoomDatabase {
      * @return db instance
      */
     private static AppDataBase buildDatabase(final Context context) {
-        return Room.databaseBuilder(context.getApplicationContext(), AppDataBase.class, DATABASE_NAME).allowMainThreadQueries().build();
-    }
-
-    /**
-     * Insert data sets to db
-     *
-     * @param dataBase db
-     * @param dramas   Drama[]
-     */
-    private static void insertData(final AppDataBase dataBase, final List<DramaEntity> dramas) {
-        dataBase.runInTransaction(() -> {
-            dataBase.dramaDao().insertAll(dramas);
-        });
+        return Room.databaseBuilder(context.getApplicationContext(),
+                AppDataBase.class, DatabaseContract.DATABASE_NAME).allowMainThreadQueries().build();
     }
 }

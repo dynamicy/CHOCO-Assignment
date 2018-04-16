@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide;
 import com.example.chris.chocoassignment.R;
 import com.example.chris.chocoassignment.core.common.model.Drama;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Title: com.example.chris.chocoassignment.mainlist.view.mainlist.MainListAdapter<br>
@@ -24,11 +26,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
 
     private OnItemClickListener onItemClickListener;
 
-    private Drama[] data;
-
-    public MainListAdapter(Drama[] data) {
-        this.data = data;
-    }
+    private List<Drama> data = new ArrayList<>();
 
     @NonNull
     @Override
@@ -40,13 +38,13 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MainListItemViewHolder holder, int position) {
-        String name = data[position].getName();
-        String rating = String.valueOf(data[position].getRating());
-        Date date = data[position].getCreatedAt();
-        String imgUrl = data[position].getThumb();
+        String name = data.get(position).getName();
+        String rating = String.valueOf(data.get(position).getRating());
+        Date date = data.get(position).getCreatedAt();
+        String imgUrl = data.get(position).getThumb();
 
         holder.itemView.setOnClickListener(v -> {
-            Drama drama = data[holder.getAdapterPosition()];
+            Drama drama = data.get(holder.getAdapterPosition());
             onItemClickListener.onItemClick(drama);
         });
 
@@ -61,14 +59,14 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return data.size();
     }
 
-    public Drama[] getData() {
+    public List<Drama> getData() {
         return data;
     }
 
-    public void setData(Drama[] data) {
+    public void setData(List<Drama> data) {
         this.data = data;
         notifyDataSetChanged();
     }

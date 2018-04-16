@@ -1,4 +1,4 @@
-package com.example.chris.chocoassignment.data;
+package com.example.chris.chocoassignment.data.remote;
 
 import com.example.chris.chocoassignment.core.common.model.DramaData;
 

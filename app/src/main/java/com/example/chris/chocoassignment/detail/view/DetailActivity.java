@@ -109,10 +109,14 @@ public class DetailActivity extends AppCompatActivity implements IDetailView {
 
     @Override
     public void showDetailView(Drama data) {
+
         nameTextView.setText(data.getName());
-        createdAtTextView.setText(data.getCreatedAt().toString());
-        ratingTextView.setText(String.valueOf(data.getRating()));
-        totalViewsTextView.setText(String.valueOf(data.getTotalViews()));
+
+        createdAtTextView.setText(getString(R.string.created_at, data.getCreatedAt().toString()));
+
+        ratingTextView.setText(getString(R.string.ratings, String.valueOf(data.getRating())));
+
+        totalViewsTextView.setText(getString(R.string.total_views, String.valueOf(data.getTotalViews())));
 
         Glide.with(getBaseContext())
                 .load(data.getThumb())

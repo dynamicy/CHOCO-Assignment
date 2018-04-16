@@ -3,4 +3,7 @@
     <string name="thumb">thumb</string>
     <string name="dramas">dramas</string>
     <string name="no_data">No Data!</string>
+    <string name="ratings">(%s) Ratings</string>
+    <string name="created_at">Created date: %s</string>
+    <string name="total_views">Total views: %s</string>
 </resources>

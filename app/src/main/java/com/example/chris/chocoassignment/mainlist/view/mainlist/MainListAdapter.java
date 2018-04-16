@@ -48,9 +48,11 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListItemViewHolder
             onItemClickListener.onItemClick(drama);
         });
 
-        holder.createdAtTextView.setText(date.toString());
+        holder.createdAtTextView.setText(holder.itemView.getContext().getString(R.string.created_at, date.toString()));
+
         holder.nameTextView.setText(name);
-        holder.ratingTextView.setText(rating);
+
+        holder.ratingTextView.setText(holder.itemView.getContext().getString(R.string.ratings, rating));
 
         Glide.with(holder.thumbTmageView.getContext())
                 .load(imgUrl)
